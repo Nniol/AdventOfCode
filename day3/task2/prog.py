@@ -21,7 +21,6 @@ for line in lines:
     group_contents.append(strip_line(line))
     if index == 0:
         # Calculate badge and pri
-        print (group_contents)
         for item in group_contents[0]:
             try:
                 group_contents[1].index(item)
