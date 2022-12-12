@@ -6,9 +6,6 @@ from file_lib import get_lines_from_file,strip_line
 
 lines = get_lines_from_file(day_number=4)
 
-START_SHELF = 0
-END_SHELF = 1
-
 containing_lines = 0
 for line in lines:
     ranges = strip_line(line).split(",")
