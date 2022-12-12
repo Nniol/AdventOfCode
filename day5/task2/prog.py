@@ -73,7 +73,7 @@ def print_warehouse(warehouse:dict):
     for key in warehouse.keys():
         print (f"{str(key)}: {warehouse[key]}")
 
-lines = get_lines_from_file(day_number=4)
+lines = get_lines_from_file(day_number=5)
 warehouse = warehouse_real
 print_warehouse(warehouse)
 for line in lines:
