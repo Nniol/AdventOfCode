@@ -9,24 +9,7 @@ from file_lib import get_lines_from_file,strip_line
 
 lines = get_lines_from_file(day_number=13)
 
-def extract_numbers(p:list)-> list:
-    ret_list = []
-    if len(p)==0:
-        ret_list.append(-1)
-    while len(p)>0:
-        val1 = p.pop(0)
-        if isinstance(val1,int):
-            ret_list.append(val1)
-        else: # list
-            ret_list.extend(extract_numbers(val1)  )
-    return ret_list  
-
-def extract_list_count(p:list)-> list:
-    return p.count('[')
-
 class Packet():
-
-    empty_array_base=-10
 
     def __init__(self,p_str:str) -> None:
         self.packet_as_str:str = p_str
@@ -48,22 +31,19 @@ class Packet():
                     extend_i+=1
                 ret_list.append(int(t_num))
                 i+= extend_i-1
-                #found_digit = True
                 for k in range(len(nest_level_found)):
                     nest_level_found[k] = True
-                # nest_level_found[len(nest_level_found)-1]=True
             elif chr == '[':
-                # is next a close
+                # is it next to a close
                 if p_str[i+1]==']': # closes immediately so no need to keeo tabs
                     ret_list.append(-1)
                     i+=1 # Skip the ']' 
                 else:
                     nest_level_found.append(False)
-                # # reset found_digit
-                # found_digit = False
             elif chr == ']':
                 if nest_level_found[len(nest_level_found)-1]==False:
                     ret_list.append(-1)
+                # Closed a nest level, remove the found trigger
                 nest_level_found.pop()
             i += 1                
 
@@ -125,10 +105,6 @@ def bubble_sort(dict1:dict[int,Packet]):
             # can just exit the main loop.
             return
 
-
-
-
-
 packet_dict:dict[int,Packet] = {}
 index = 0
 for line in lines:
@@ -141,19 +117,20 @@ for line in lines:
 # Add dividers
 packet_dict.update({index:Packet("[[2]]")})
 packet_dict.update({index+1:Packet("[[6]]")})
-for key,value in packet_dict.items():
-    print (key,value.list_as_numbers)
+# for key,value in packet_dict.items():
+#     print (key,value.list_as_numbers)
 
 bubble_sort(packet_dict)
 # Find first three
 found_div_2 = 0
 found_div_6 = 0
 for key,value in packet_dict.items():
-    print (key,value.packet_as_str,value.list_as_numbers)
+    # print (key,value.packet_as_str,value.list_as_numbers)
     if found_div_2==0 and value.packet_as_str=="[[2]]":
         div_2_ind = key +1 # Add 1 as we start at 0
     if found_div_6==0 and value.packet_as_str=="[[6]]":
         found_div_6 = key +1 # Add 1 as we start at 0
+
 print (div_2_ind,found_div_6, div_2_ind*found_div_6)
 
 
