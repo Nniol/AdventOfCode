@@ -20,6 +20,10 @@ class Operation():
         self._cycles_to_complete-=1
         CPU._cycle_count += 1
         CPU._reg_x_history.append(CPU._reg_x)
+        coords = divmod(CPU._cycle_count-1,40) 
+        print ("divmod(CPU._cycle_count-1,40) (",CPU._cycle_count-1 ,",40):",coords,"in ",([CPU._reg_x-1,CPU._reg_x,CPU._reg_x+1]),':',coords[1] in [CPU._reg_x-1,CPU._reg_x,CPU._reg_x+1])
+        if coords[1] in [CPU._reg_x-1,CPU._reg_x,CPU._reg_x+1]:
+            CPU.CRT[coords[0],coords[1]]='#'
         if self._cycles_to_complete == 0: # Perform op
             if self._cmd.code == CMD_ADDX.code:
                 CPU._reg_x += self._parameter
@@ -40,6 +44,8 @@ class CPU():
     _reg_x_history:list[int] = []
     _reg_x: int = 1
     _cycle_count: int = 0 
+
+    CRT = np.full((6,40),'.')
 
     def __init__(self,init_reg_x_value:int):
         self._current_op : Operation  = CMD_BOOTUP
