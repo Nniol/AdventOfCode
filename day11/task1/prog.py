@@ -44,22 +44,20 @@ for i in range(NUM_ROUNDS):
 # lambda function is passed in key to perform sort by key 
 # passing 2nd element of items()
 # adding "reversed = True" for reversed order
+busiest_monkeys = {key: val for key, val in sorted(monkeys.items(), key = lambda ele:ele[1]._inspects, reverse=True)}
 
+for key,monkey in busiest_monkeys.items():
+    print(key,monkey._inspects)
 
-# busiest_monkeys = {key: val for key, val in sorted(monkeys.items(), key = lambda ele:ele[1]._inspects, reverse=True)}
+tot = 1
+count = 0
+for key,monkey in busiest_monkeys.items():
+    tot *= monkey._inspects
+    count += 1
+    if count >= 2:
+        break
 
-# for key,monkey in busiest_monkeys.items():
-#     print(key,monkey._inspects)
-
-# tot = 1
-# count = 0
-# for key,monkey in busiest_monkeys.items():
-#     tot *= monkey._inspects
-#     count += 1
-#     if count >= 2:
-#         break
-
-# print (tot)
+print (tot)
 
 for key,monkey in monkeys.items():
     print(key,monkey._inspects)
