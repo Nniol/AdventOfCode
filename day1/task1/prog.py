@@ -28,7 +28,7 @@ for line in lines:
         elves.append(current_elf)
         current_elf = None
         continue
-    current_elf.count_food_items = current_elf.count_food_items+1
+    current_elf.count_food_items += 1
     current_elf.total_caloris += int(line)
 
 print (most_calories)
