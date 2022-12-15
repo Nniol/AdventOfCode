@@ -34,7 +34,6 @@ for line in lines:
 def in_grid(x:int,y:int,max_num:int):
     return x >= 0 and x <=max_num and y>=0 and y<=max_num
 
-
 RIGHT_DOWN=Offset(1,1)
 LEFT_DOWN=Offset(-1,1)
 RIGHT_UP=Offset(1,-1)
@@ -42,7 +41,11 @@ LEFT_UP= Offset(-1,-1)
 TRACKING_ORDER=[RIGHT_DOWN,LEFT_DOWN,LEFT_DOWN,RIGHT_UP]
 
 def solve(max_num):
-    
+
+    num_checks = 0
+    num_points = 0
+
+
     for key,sensor in SENSORS.items():
         tracking_index = 0
         offset = TRACKING_ORDER[tracking_index]
@@ -52,6 +55,7 @@ def solve(max_num):
         p = Point(x,y,PointType.NOT_COVERED)    
         # print (f"{p.x},{p.y}, {tracking_index}")
         while tracking_index < len(TRACKING_ORDER):
+            num_points +=1
             inside = False
             if in_grid(p.x,p.y,max_num) and p.get_dict_key() not in SENSORS and p.get_dict_key() not in BEACONS:
                 for key2,test_sensor in SENSORS.items():
@@ -59,11 +63,13 @@ def solve(max_num):
                         # print (key,key2,"Same Sensor")
                         continue
                     # print (f"test_sensor {test_sensor}, {test_sensor.get_distance_to(p)}")
+                    num_checks += 1
                     if test_sensor.is_closer_or_equal_to_beacon(p): # Covered by sensor
                         # print (f"inside sensor: {key2}: distance to sensor:{test_sensor.get_distance_to(p)}: distance to beacon:{test_sensor.distance_to_beacon}" )
                         inside = True
                         break
                 if not inside:
+                    print (num_points,num_checks)
                     return p
             # else:
                 # print (f"IN_GRID: {in_grid(x,y,max_num)}")
@@ -86,6 +92,8 @@ def solve(max_num):
 p = solve(4000000)
 print (p)
 print (4000000*p.x + p.y)
+
+print (num_points,num_checks)
 
 
 # COVERED:dict[str:Point] = {}
