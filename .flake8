@@ -1,0 +1,7 @@
+[flake8]
+#ignore = E226,E302,E41
+#W605 is the invalid regex /d
+ignore = W605
+max-line-length = 150
+#exclude = tests/*
+#max-complexity = 10
